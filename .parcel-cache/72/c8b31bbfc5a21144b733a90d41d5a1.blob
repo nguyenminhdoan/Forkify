@@ -1,0 +1,71 @@
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.View = void 0;
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+class View {
+  constructor() {
+    _defineProperty(this, "_data", void 0);
+  }
+
+  render(data) {
+    this._data = data;
+    this.clear;
+
+    const markup = this._generateMarkup();
+
+    this._parentEl.insertAdjacentHTML('afterbegin', markup);
+  }
+
+  renderSpinner() {
+    const markup = `
+        <div class="spinner">
+          <svg>
+            <use href="${icon}#icon-loader"></use>
+          </svg>
+        </div>
+      `;
+    this._parentEl.innerHTML = '';
+
+    this._parentEl.insertAdjacentHTML('afterbegin', markup);
+  }
+
+  renderError(message = this._errorMessage) {
+    const markup = `
+      <div class="error">
+        <div>
+          <svg>
+            <use href="${icon}#icon-alert-triangle"></use>
+          </svg>
+        </div>
+        <p>${message}</p>
+      </div>;
+      `;
+    this._parentEl.innerHTML = '';
+
+    this._parentEl.insertAdjacentHTML('afterbegin', markup);
+  }
+
+  renderMessage(message = this._successMessage) {
+    const markup = ` 
+        <div class="message">
+          <div>
+            <svg>
+              <use href="${icon}#icon-smile"></use>
+            </svg>
+          </div>
+          <p>${message}</p>
+        </div>;
+        `;
+    this._parentEl.innerHTML = '';
+
+    this._parentEl.insertAdjacentHTML('afterbegin', markup);
+  }
+
+}
+
+exports.View = View;

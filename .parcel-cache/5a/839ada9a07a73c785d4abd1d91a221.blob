@@ -1,0 +1,42 @@
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.View = void 0;
+
+class View {//   #data;
+  //   render(data) {
+  //     this.#data = data;
+  //     this.clear;
+  //     const markup = this.#generateMarkup();
+  //     this.#parentEl.insertAdjacentHTML('afterbegin', markup);
+  //   }
+  //   renderSpinner() {
+  //     const markup = `
+  //       <div class="spinner">
+  //         <svg>
+  //           <use href="${icon}#icon-loader"></use>
+  //         </svg>
+  //       </div>
+  //     `;
+  //     this.#parentEl.innerHTML = '';
+  //     this.#parentEl.insertAdjacentHTML('afterbegin', markup);
+  //   }
+  //   renderError(message = this.#errorMessage) {
+  //     const markup = ` 
+  //     <div class="error">
+  //       <div>
+  //         <svg>
+  //           <use href="${icon}#icon-alert-triangle"></use>
+  //         </svg>
+  //       </div>
+  //       <p>${message}</p>
+  //     </div>;
+  //     `;
+  //     this.#parentEl.innerHTML = '';
+  //     this.#parentEl.insertAdjacentHTML('afterbegin', markup);
+  //   }
+}
+
+exports.View = View;

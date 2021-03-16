@@ -1,0 +1,99 @@
+"use strict";
+
+var model = _interopRequireWildcard(require("./model.js"));
+
+var _recipeView = _interopRequireDefault(require("./views/recipeView.js"));
+
+var _runtime = require("regenerator-runtime/runtime");
+
+var _searchView = _interopRequireDefault(require("./views/searchView.js"));
+
+var _resultView = _interopRequireDefault(require("./views/resultView.js"));
+
+var _view = _interopRequireDefault(require("./views/view"));
+
+var _paginationView = _interopRequireDefault(require("./views/paginationView"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function () { return cache; }; return cache; }
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
+
+// console.log(icons);
+// if (module.hot) {
+//   module.hot.accept();
+// }
+// https://forkify-api.herokuapp.com/v2
+///////////////////////////////////////
+const controlRecipe = async function () {
+  try {
+    const id = window.location.hash.slice(1);
+    if (!id) return;
+
+    _recipeView.default.renderSpinner(); //1 Loading Recipe
+
+
+    await model.loadRecipe(id); //2) RENDER RECIPE
+
+    _recipeView.default.render(model.state.recipe);
+
+    console.log('haha');
+    controlServings(); // TEST
+  } catch (err) {
+    // alert(err);
+    _recipeView.default.renderError();
+  }
+};
+
+const controlSearchResult = async function () {
+  try {
+    _resultView.default.renderSpinner(); //1) GET SEARCH QUERY
+
+
+    const query = _searchView.default.getQuery();
+
+    if (!query) return; // 2) LOAD SEARCH QUERY
+
+    await model.loadSearchResult(query); // 3) RENDER RESULTS
+    // console.log(model.state.search.result);
+
+    _resultView.default.render(model.getSearchResultPage()); // 4) Render initial pagination buttons
+
+
+    _paginationView.default.render(model.state.search);
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+const controlPagination = function (goToPage) {
+  // 3) RENDER RESULTS
+  // console.log(model.state.search.result);
+  _resultView.default.render(model.getSearchResultPage(goToPage)); // 4) Render initial pagination buttons
+
+
+  _paginationView.default.render(model.state.search);
+};
+
+const controlServings = function () {
+  // Update the recipe serving (in state)
+  model.updateServing(8); // Update the recipeView
+  // recipeView.render(model.state.recipe);
+
+  console.log('hi');
+};
+
+con;
+
+const init = function () {
+  _recipeView.default.handlerRender(controlRecipe);
+
+  _searchView.default.handlerSearchView(controlSearchResult);
+
+  _paginationView.default._handleClickPagination(controlPagination);
+};
+
+init(); // controlRecipe();
+// window.addEventListener('hashchange', showRecipe)
+// console.log(recipeContainer);

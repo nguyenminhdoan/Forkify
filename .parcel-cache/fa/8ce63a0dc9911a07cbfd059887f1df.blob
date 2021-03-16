@@ -1,0 +1,65 @@
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.loadSearchResult = exports.loadRecipe = exports.state = void 0;
+
+var _regeneratorRuntime = require("regenerator-runtime");
+
+var _config = require("./config.js");
+
+var _helpers = require("./helpers.js");
+
+const state = {
+  recipe: {},
+  search
+};
+exports.state = state;
+
+const loadRecipe = async function (id) {
+  try {
+    const data = await (0, _helpers.GET_JSON)(`${_config.API_URL}${id}`); // console.log(res);
+
+    const {
+      recipe
+    } = data.data;
+    state.recipe = {
+      id: recipe.id,
+      title: recipe.title,
+      publisher: recipe.publisher,
+      sourceURL: recipe.source_url,
+      image: recipe.image_url,
+      servings: recipe.servings,
+      cookingTime: recipe.cooking_time,
+      ingredient: recipe.ingredients
+    }; // console.log(recipe);
+  } catch (err) {
+    console.error(`${err}🌋🌋🌋🌋`);
+    throw err;
+  } // console.log(state.recipe);
+
+};
+
+exports.loadRecipe = loadRecipe;
+
+const loadSearchResult = async function (query) {
+  try {
+    const data = await (0, _helpers.GET_JSON)(`${_config.API_URL}?search=${query}`);
+    console.log(data);
+    data.data.recipes.map(ing => {
+      return {
+        id: ing.id,
+        title: ing.title,
+        publisher: ing.publisher,
+        image: ing.image_url
+      };
+    });
+  } catch (err) {
+    console.error(`${err}🌋🌋🌋🌋`);
+    throw err;
+  }
+};
+
+exports.loadSearchResult = loadSearchResult;
+loadSearchResult('pizza');

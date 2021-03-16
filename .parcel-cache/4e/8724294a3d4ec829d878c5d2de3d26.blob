@@ -1,0 +1,70 @@
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.View = void 0;
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+function _classPrivateMethodGet(receiver, privateSet, fn) { if (!privateSet.has(receiver)) { throw new TypeError("attempted to get private field on non-instance"); } return fn; }
+
+var _clear = new WeakSet();
+
+class View {
+  constructor() {
+    _clear.add(this);
+
+    _defineProperty(this, "_data", void 0);
+  }
+
+  render(data) {
+    this._data = data;
+
+    _classPrivateMethodGet(this, _clear, _clear2);
+
+    const markup = this._generateMarkup();
+
+    this._parentEl.insertAdjacentHTML('afterbegin', markup);
+  }
+
+  renderSpinner() {
+    const markup = `
+        <div class="spinner">
+          <svg>
+            <use href="${icon}#icon-loader"></use>
+          </svg>
+        </div>
+      `;
+    this._parentEl.innerHTML = '';
+
+    this._parentEl.insertAdjacentHTML('afterbegin', markup);
+  }
+
+  handlerRender(handle) {
+    ['hashchange', 'load'].forEach(ev => window.addEventListener(ev, handle));
+  }
+
+  renderError(message = this._errorMessage) {
+    const markup = `
+      <div class="error">
+        <div>
+          <svg>
+            <use href="${icon}#icon-alert-triangle"></use>
+          </svg>
+        </div>
+        <p>${message}</p>
+      </div>;
+      `;
+    this._parentEl.innerHTML = '';
+
+    this._parentEl.insertAdjacentHTML('afterbegin', markup);
+  }
+
+}
+
+exports.View = View;
+
+var _clear2 = function _clear2() {
+  this._parentEl.innerHTML = '';
+};
